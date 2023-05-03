@@ -9,33 +9,33 @@ const getFormData = async (e) => {
     const data = await res.json();
 
     render(data)
+//Check if valid up here before passing data
 
 };  
 
 const render = (data) => {
     container.innerHTML = ' '
     let newHtml;
-    if(data.status ==' ok') {
-        const pokemon = data.pokemon
+    console.log(data)
+    if(data) {
+        const pokemon = data
         newHtml = document.createElement('div')
         newHtml.innerHTML = `
-         <div class="card">
-    <div class="container">
-        <img src="{{pokemon.name}}" width="250" height="250">
-        <h3>Name : {{pokemon.sprite}}</h3>
-    </div>
-</div>
-`
+        <div class="card">
+            <h2>${pokemon.name}</h2>
+            <img id="image" src="${pokemon.sprites.front_default}" width="200" height="200">
+        </div>
+        `
+
     }
     else {
-        const errorMessage = document.createElement('h2')
-        errorMessage.innerText = dataMessage
-        search.append(errorMessage)
+        newHtml = document.createElement('h2')
+        newHtml.innerText = "Cannot find that pokemon"
         
     }
     container.append(newHtml)
 };
 
 
-const form = document.querySelector('form');
+const form = document.querySelector('#form');
 form.addEventListener('submit', getFormData)
